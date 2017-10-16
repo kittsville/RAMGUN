@@ -2,9 +2,10 @@ import requests
 import ConfigParser
 import sys
 import time
+import os
 
 configParser = ConfigParser.ConfigParser()
-configParser.read('config.ini')
+configLocation = configParser.read(os.path.join(os.path.abspath(os.path.dirname(__file__)), 'config.ini'))
 
 ruTorrentConf  = dict(configParser.items('ruTorrent'))
 torrentDetails = dict(configParser.items('TorrentDetails'))
