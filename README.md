@@ -2,6 +2,8 @@
 
 RAMGUN adds magnet links from your browser to ruTorrent, saving a small amount of time.
 
+Note that RAMGUN cannot add .torrent files, just magnet links.
+
 # Usage
 
 1. Click magnet link in browser:  
