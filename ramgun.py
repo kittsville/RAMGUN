@@ -7,6 +7,7 @@ import os
 configParser = ConfigParser.ConfigParser()
 configLocation = configParser.read(os.path.join(os.path.abspath(os.path.dirname(__file__)), 'config.ini'))
 
+ramgunConf  = dict(configParser.items('RAMGUN'))
 ruTorrentConf  = dict(configParser.items('ruTorrent'))
 torrentDetails = dict(configParser.items('TorrentDetails'))
 
@@ -14,14 +15,17 @@ payload = {
     'url' : sys.argv[1]
 }
 
-message = "You're about to add the magnet link:\n{0}\nARE YOU SURE ABOUT THAT? Y/N".format(payload['url'])
-confirmation = raw_input(message)
+requireConfirmation = ramgunConf['requireconfirmation'] == 'True'
 
-if confirmation.upper() == 'Y':
-    print 'Adding...'
-else:
-    print 'Cancelling...'
-    sys.exit(0)
+if requireConfirmation:
+    message = "You're about to add the magnet link:\n{0}\nARE YOU SURE ABOUT THAT? Y/N".format(payload['url'])
+    confirmation = raw_input(message)
+
+    if confirmation.upper() == 'Y':
+        print 'Adding...'
+    else:
+        print 'Cancelling...'
+        sys.exit(0)
 
 ruTorrentAuth = (ruTorrentConf['username'], ruTorrentConf['password'])
 
